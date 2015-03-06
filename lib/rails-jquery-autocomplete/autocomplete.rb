@@ -98,9 +98,9 @@ module RailsJQueryAutocomplete
     #
     def json_for_autocomplete(items, method, extra_data=[])
       items = items.collect do |item|
-        hash = {"id" => item.id.to_s, "label" => item.send(method), "value" => item.send(method)}
+        hash = {"id" => item.id.to_s, "label" => item.send(method).to_s, "value" => item.send(method).to_s}
         extra_data.each do |datum|
-          hash[datum] = item.send(datum)
+          hash[datum] = item.send(datum).to_s
         end if extra_data
         # TODO: Come back to remove this if clause when test suite is better
         hash
