@@ -43,7 +43,7 @@ module RailsJQueryAutocomplete
         if options[:hstore]
           ["LOWER(#{table_name}.#{method} -> '#{options[:hstore][:key]}') LIKE ?", "#{(is_full_search ? '%' : '')}#{term.downcase}%"]
         else
-          ["LOWER(CAST(#{table_name}.#{method} AS TEXT)) #{like_clause} ?", "#{(is_full_search ? '%' : '')}#{term.downcase}%"]
+          ["LOWER(#{table_name}.#{method}::text) #{like_clause} ?", "#{(is_full_search ? '%' : '')}#{term.downcase}%"]
         end
       end
 
