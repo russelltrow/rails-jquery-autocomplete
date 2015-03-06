@@ -5,7 +5,7 @@ module RailsJQueryAutocomplete
         order = options[:order]
 
         table_prefix = model ? "#{model.table_name}." : ""
-        order || "LOWER(#{table_prefix}#{method}) ASC"
+        order || "LOWER(CAST(#{table_prefix}#{method} AS TEXT)) ASC"
       end
 
       def active_record_get_autocomplete_items(parameters)
@@ -43,7 +43,7 @@ module RailsJQueryAutocomplete
         if options[:hstore]
           ["LOWER(#{table_name}.#{method} -> '#{options[:hstore][:key]}') LIKE ?", "#{(is_full_search ? '%' : '')}#{term.downcase}%"]
         else
-          ["#{table_name}.#{method} #{like_clause} ?", "#{(is_full_search ? '%' : '')}#{term.downcase}%"]
+          ["LOWER(CAST(#{table_name}.#{method} AS TEXT)) #{like_clause} ?", "#{(is_full_search ? '%' : '')}#{term.downcase}%"]
         end
       end
 
